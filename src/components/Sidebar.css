@@ -1,0 +1,27 @@
+.sidebar {
+  width: 200px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  height: fit-content;
+}
+
+.sidebar h3 {
+  margin-bottom: 10px;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 8px;
+  border: none;
+  background: #3b45a1;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  background:#4a56c2;
+}
