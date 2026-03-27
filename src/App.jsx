@@ -1,40 +1,18 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import ProductCard from "./components/ProductCard";
-import "./App.css";
+import Home from "./pages/Home";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
-  const [produtos, setProdutos] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then(res => res.json())
-      .then(data => {
-        setProdutos(data);
-        setLoading(false);
-      });
-  }, []);
-
   return (
-    <>
+    <BrowserRouter>
       <Header />
 
-      <div className="container">
-        <h1>Produtos</h1>
-
-        {/* 🔄 LOADING */}
-        {loading ? (
-          <p className="loading">Carregando...</p>
-        ) : (
-          <div className="grid">
-            {produtos.map(prod => (
-              <ProductCard key={prod.id} produto={prod} />
-            ))}
-          </div>
-        )}
-      </div>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

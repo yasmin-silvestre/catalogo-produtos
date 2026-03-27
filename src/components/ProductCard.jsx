@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import "./ProductCard.css";
 
 function ProductCard({ produto }) {
+  const navigate = useNavigate();
+
   return (
-    <div className="card">
+    <div
+      className="card"
+      onClick={() => navigate(`/product/${produto.id}`)}
+      style={{ cursor: "pointer" }}
+    >
       <img src={produto.image} alt={produto.title} />
 
       <h3>{produto.title}</h3>
