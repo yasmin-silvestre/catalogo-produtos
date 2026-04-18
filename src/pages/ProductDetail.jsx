@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
+import { api } from "../services/api"; 
 import Spinner from "../components/Spinner";
 import "../components/LiquidButton.css";
 
@@ -12,12 +13,12 @@ function ProductDetail() {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
-      .then(res => res.json())
+    api.getProductById(id)
       .then(data => {
         setProduto(data);
         setLoading(false);
-      });
+      })
+      .catch(() => setLoading(false));
   }, [id]);
 
   if (loading) return <Spinner />;
@@ -29,7 +30,7 @@ function ProductDetail() {
         ← VOLTAR PARA PRODUTOS
       </button>
 
-      {/* Ajustado: flex-wrap permite que o conteúdo desça caso o título seja muito grande em telas menores */}
+      {/* Container principal com flex-wrap para responsividade */}
       <div style={{ 
         display: "flex", 
         flexWrap: "wrap", 
@@ -41,34 +42,39 @@ function ProductDetail() {
         boxShadow: "0 10px 30px rgba(0,0,0,0.1)" 
       }}>
         
-        {/* Container da Imagem com tamanho fixo máximo para não sumir */}
+        {/* Lado da Imagem */}
         <div style={{ flex: "1 1 300px", textAlign: "center" }}>
-          <img src={produto.image} style={{ maxWidth: "100%", height: "auto", maxHeight: "400px", objectFit: "contain" }} alt={produto.title} />
+          <img 
+            src={produto.image} 
+            style={{ maxWidth: "100%", height: "auto", maxHeight: "400px", objectFit: "contain" }} 
+            alt={produto.title} 
+          />
         </div>
         
-        {/* Container do Texto: flex: 2 garante que ele tenha mais espaço para o título longo */}
+        {/* Lado do Conteúdo - Onde corrigimos o título */}
         <div style={{ flex: "2 1 400px", minWidth: "300px" }}>
           <span style={{ textTransform: "uppercase", color: "#888", fontSize: "14px", fontWeight: "bold" }}>
             {produto.category}
           </span>
           
-          {/* Título: Adicionado word-break para evitar que palavras muito longas quebrem o layout */}
+          {/* Título Corrigido: wordBreak e overflowWrap garantem que textos gigantes não quebrem o layout */}
           <h1 style={{ 
             color: "#111", 
             marginBottom: "15px", 
             fontSize: "2.5rem", 
             lineHeight: "1.2",
             wordBreak: "break-word",
-            overflowWrap: "anywhere" 
+            overflowWrap: "anywhere",
+            textAlign: "left"
           }}>
             {produto.title}
           </h1>
           
-          <p style={{ color: "#444", fontSize: "1.1rem", marginBottom: "25px", lineHeight: "1.6" }}>
+          <p style={{ color: "#444", fontSize: "1.1rem", marginBottom: "25px", lineHeight: "1.6", textAlign: "left" }}>
             {produto.description}
           </p>
           
-          <h2 style={{ color: "#3b45a1", fontSize: "2.5rem", marginBottom: "30px", fontWeight: "bold" }}>
+          <h2 style={{ color: "#3b45a1", fontSize: "2.5rem", marginBottom: "30px", fontWeight: "bold", textAlign: "left" }}>
             {produto.price.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",

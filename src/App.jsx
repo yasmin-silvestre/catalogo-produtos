@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart"; // Import novo
+import Cart from "./pages/Cart";
 import Header from "./components/Header";
+import "./styles/App.css"; // Caminho atualizado
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} /> {/* Rota nova */}
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </Router>
   );

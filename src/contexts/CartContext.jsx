@@ -1,9 +1,18 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  // Inicializa o estado buscando do localStorage se existir
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart_loja");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  // Salva no localStorage toda vez que o carrinho mudar
+  useEffect(() => {
+    localStorage.setItem("cart_loja", JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product) => {
     setCart((prevCart) => {
@@ -17,7 +26,6 @@ export function CartProvider({ children }) {
     });
   };
 
-  // Alterado para aceitar diminuir quantidade ou remover tudo
   const removeFromCart = (id, decreaseOnly = false) => {
     setCart((prevCart) => {
       const item = prevCart.find((i) => i.id === id);

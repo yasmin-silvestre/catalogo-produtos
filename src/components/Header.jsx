@@ -9,7 +9,7 @@ function Header() {
   return (
     <header className="header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "15px 40px", background: "#3b45a1", color: "white", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
       <h2 onClick={() => navigate("/")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", margin: 0 }}> 
-        <span style={{ fontSize: "28px" }}>🛒</span> Minha Loja
+        <span style={{ fontSize: "28px" }}>🛒</span> Urban Bloom
       </h2>
       
       {/* Área do carrinho estilizada como um botão de vidro */}
